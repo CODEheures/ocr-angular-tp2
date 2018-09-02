@@ -23,6 +23,20 @@ export class AuthService {
     this.publishIsAuth()
   }
 
+  getIsAuthFromFirebase(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.setIsAuth(true)
+          resolve(true)
+        } else {
+          this.setIsAuth(false)
+          resolve(false)
+        }
+      })
+    })
+  }
+
   async signIn(email: string, password: string) {
     try {
       const response = await firebase.auth().createUserWithEmailAndPassword(email, password)

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,22 +13,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isAuth: boolean
   public isAuthSubscription: Subscription
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
     this.isAuthSubscription = this.authService.isAuthSubject.subscribe((isAuth) => {
       this.isAuth = isAuth
     })
-    this.authService.publishIsAuth()
   }
 
   ngOnDestroy() {
     this.isAuthSubscription.unsubscribe()
   }
 
-  async signOut() {
+  async onSignOut() {
     try {
       await this.authService.signOut()
+      this.router.navigate(['/books'])
     } catch {
       console.log('Erreur de déconnexion')
     }

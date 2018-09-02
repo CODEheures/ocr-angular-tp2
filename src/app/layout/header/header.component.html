@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" routerLink="/">Bibliothèque</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/books']" routerLinkActive="active" >Livres</a>
-        </li>
-      </ul>
-      <div>
-        <a [routerLink]="['/auth', 'signup']" routerLinkActive="active" class="btn btn-primary mr-sm-2 my-2 my-sm-0" role="button" *ngIf="!isAuth">Connexion</a>
-        <a [routerLink]="['/auth' , 'signin']" routerLinkActive="active" class="btn btn-primary mr-sm-2 my-2 my-sm-0" role="button" *ngIf="!isAuth">S'enregistrer</a>
-        <button (click)="signOut()" class="btn btn-primary my-2 my-sm-0" *ngIf="isAuth">Déconnexion</button>
-      </div>
+  <a class="navbar-brand" routerLink="/">Bibliothèque</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/books']" routerLinkActive="active" >Livres</a>
+      </li>
+    </ul>
+    <div>
+      <a [routerLink]="['/auth', 'signup']" routerLinkActive="active" class="btn btn-primary mr-sm-2 my-2 my-sm-0" role="button" *ngIf="!isAuth">Connexion</a>
+      <a [routerLink]="['/auth' , 'signin']" routerLinkActive="active" class="btn btn-primary mr-sm-2 my-2 my-sm-0" role="button" *ngIf="!isAuth">S'enregistrer</a>
+      <button (click)="onSignOut()" class="btn btn-primary my-2 my-sm-0" *ngIf="isAuth">Déconnexion</button>
     </div>
-  </nav>
+  </div>
+</nav>

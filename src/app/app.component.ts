@@ -22,6 +22,6 @@ export class AppComponent implements OnInit {
       messagingSenderId: '582003278916'
     };
     firebase.initializeApp(config);
-    this.authService.publishIsAuth()
+    this.authService.getIsAuthFromFirebase()
   }
 }

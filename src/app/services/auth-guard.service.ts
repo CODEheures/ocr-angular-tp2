@@ -16,15 +16,12 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.authService.setIsAuth(true)
+      this.authService.getIsAuthFromFirebase().then((isAuth) => {
+        if (isAuth) {
           resolve(true)
         } else {
-          console.log('can activate false')
-          this.authService.setIsAuth(false)
           this.router.navigate(['/auth', 'signup'])
-          resolve(false)
+          reject(false)
         }
       })
     })
