@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col">
+    <h2 class="display-4">Connexion</h2>
+    <div class="alert alert-danger" role="alert" *ngIf="msgError">
+        {{ msgError }}
+    </div>
+    <form [formGroup]="signUpFromGroup" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+          <label for="email">Addresse Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Entrer votre email" formControlName="email">
+      </div>
+      <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" class="form-control" id="password" placeholder="Mot de passe" formControlName="password">
+      </div>
+      <button class="btn btn-primary" [disabled]="signUpFromGroup.invalid">Connexion</button>
+    </form>
+  </div>
+</div>
+  
