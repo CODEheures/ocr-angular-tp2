@@ -17,8 +17,8 @@ import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'books', component: BookListComponent },
-  { path: 'books/edit', canActivate: [AuthGuardService], component: BookEditComponent },
-  { path: 'books/:id', canActivate: [AuthGuardService], component: BookDetailComponent },
+  { path: 'books/new', canActivate: [AuthGuardService], component: BookEditComponent },
+  { path: 'books/view/:id', canActivate: [AuthGuardService], component: BookDetailComponent },
   { path: 'auth/signup', component: SignUpComponent},
   { path: 'auth/signin', component: SignInComponent},
   { path: '', redirectTo: '/books', pathMatch: 'full'},

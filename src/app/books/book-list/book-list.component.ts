@@ -1,15 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Book } from '../../interfaces/book';
+import { Subscription } from 'rxjs';
+import { BookService } from '../../services/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
   styles: []
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  public books: Book[]
+  public booksSubscription: Subscription
+  public msgError: string
+
+  constructor(private bookService: BookService, private router: Router) { }
 
   ngOnInit() {
+    this.booksSubscription = this.bookService.booksSubject.subscribe((books: Book[]) => {
+      this.books = books
+    })
+    this.bookService.publishBooks()
   }
 
+  ngOnDestroy() {
+    this.booksSubscription.unsubscribe()
+  }
+
+  onNewBook() {
+    this.router.navigate(['/books', 'new'])
+  }
+
+  onDeleteBook(id: number) {
+    try {
+      this.bookService.deleteBook(id)
+    } catch (error) {
+      this.msgError = error
+    }
+  }
+
+  onViewBook(id: number) {
+    this.router.navigate(['/books', id])
+  }
 }
