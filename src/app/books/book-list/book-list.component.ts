@@ -3,6 +3,7 @@ import { Book } from '../../interfaces/book';
 import { Subscription } from 'rxjs';
 import { BookService } from '../../services/book.service';
 import { Router } from '@angular/router';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-book-list',
@@ -14,6 +15,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   public books: Book[]
   public booksSubscription: Subscription
   public msgError: string
+  public faMinus = faMinus
 
   constructor(private bookService: BookService, private router: Router) { }
 
@@ -21,7 +23,7 @@ export class BookListComponent implements OnInit, OnDestroy {
     this.booksSubscription = this.bookService.booksSubject.subscribe((books: Book[]) => {
       this.books = books
     })
-    this.bookService.publishBooks()
+    this.bookService.getBooks()
   }
 
   ngOnDestroy() {

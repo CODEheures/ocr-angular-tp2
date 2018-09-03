@@ -42,7 +42,6 @@ export class BookService {
   createNewBook(book: Book) {
     this.books.push(book)
     this.saveBooks()
-    this.publishBooks()
   }
 
   async deleteBook(id: number) {
