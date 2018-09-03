@@ -18,11 +18,6 @@ export class BookDetailComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.book = {
-      title: '',
-      photo: '',
-      synopsis: ''
-    }
     const id = this.route.snapshot.paramMap.get('id')
     this.bookService.getBookById(+id)
       .then((book: Book) => {

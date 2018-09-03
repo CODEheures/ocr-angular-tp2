@@ -1,5 +1,8 @@
 <div class="row">
   <div class="col">
+      <div class="alert alert-danger" role="alert" *ngIf="msgError">
+          {{msgError}}
+      </div>
     <h2 class="display-4">Ajouter un livre</h2>
     <form [formGroup]="bookFormGroup" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -7,14 +10,17 @@
           <input type="text" id="title" class="form-control" formControlName="title">
       </div>
       <div class="form-group">
-          <label for="photo">URL de la Photo</label>
-          <input type="text" id="photo" class="form-control" formControlName="photo">
-      </div>
-      <div class="form-group">
           <label for="synopsis">Synopsis</label>
           <textarea class="form-control" id="synopsis" rows="3" formControlName="synopsis"></textarea>
       </div>
-      <button class="btn btn-primary" [disabled]="bookFormGroup.invalid">Enregistrer</button>
+      <div class="form-group">
+        <label for="photo">Photo</label>
+        <input 
+        type="file" id="photo" accept="images/*"
+        class="form-control" formControlName="photo" 
+        (change)="onFileChange($event.target.files[0])">
+      </div>
+      <button class="btn btn-primary" [disabled]="bookFormGroup.invalid || !fileIsUploaded || fileIsUploading">Enregistrer</button>
     </form>
   </div>
 </div>

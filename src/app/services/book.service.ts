@@ -35,7 +35,7 @@ export class BookService {
       const data = await firebase.database().ref('/books/' + id).once('value')
       return data.val()
     } catch (error) {
-      throw(error)
+      throw(error.message as firebase.FirebaseError)
     }
   }
 
@@ -46,9 +46,38 @@ export class BookService {
 
   async deleteBook(id: number) {
     try {
+      await this.deleteFile(this.books[id].photo)
       await firebase.database().ref('/books/' + id).remove()
     } catch (error) {
-      throw(error)
+      throw(error.message as firebase.FirebaseError)
     }
+  }
+
+  async deleteFile(url: string) {
+    try {
+      await firebase.storage().refFromURL(url).delete()
+    } catch (error) {
+      throw(error.message as firebase.FirebaseError)
+    }
+  }
+
+  uploadFile(file: File) {
+    const uniqueName = Date.now().toString() + file.name
+    return new Promise((resolve, reject) => {
+      const upload = firebase.storage().ref().child('images/' + uniqueName).put(file)
+      upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        () => {
+          console.log('chargement en cours...')
+        },
+        (error: firebase.FirebaseError) => {
+          reject(error.message)
+        },
+        () => {
+          upload.snapshot.ref.getDownloadURL().then((url: string) => {
+            resolve(url)
+          })
+        }
+      )
+    })
   }
 }

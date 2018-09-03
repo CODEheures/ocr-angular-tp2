@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 export class BookEditComponent implements OnInit {
 
   public bookFormGroup: FormGroup
+  public fileIsUploading = false
+  public fileIsUploaded = false
+  public fileUrl: string
+  public msgError: string
 
   constructor(private formBuilder: FormBuilder,
               private bookService: BookService,
@@ -28,11 +32,34 @@ export class BookEditComponent implements OnInit {
     this.bookService.createNewBook(
       {
         title: this.bookFormGroup.value['title'],
-        photo: this.bookFormGroup.value['photo'],
+        photo: this.fileUrl,
         synopsis: this.bookFormGroup.value['synopsis']
       }
     )
     this.router.navigate(['/books'])
   }
 
+  onFileChange(file: File) {
+    this.fileIsUploading = true
+    this.bookFormGroup.controls['photo'].disable()
+
+    // If a file is already uploaded we delete this
+    if (this.fileUrl && this.fileIsUploaded) {
+      this.bookService.deleteFile(this.fileUrl)
+    }
+
+    // Upload a new file
+    this.bookService.uploadFile(file)
+      .then((url: string) => {
+        this.fileUrl = url
+        this.fileIsUploading = false
+        this.fileIsUploaded = true
+        this.bookFormGroup.controls['photo'].enable()
+      })
+      .catch((error) => {
+        this.fileIsUploading = false
+        this.fileIsUploaded = false
+        this.msgError = error
+      })
+  }
 }
