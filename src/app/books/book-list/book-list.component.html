@@ -4,10 +4,9 @@
     <ul class="list-group">
       <li 
       *ngFor="let book of books; let i=index" 
-      class="list-group-item d-flex justify-content-between align-items-center"
-      (click)="onViewBook(i)">
-        {{book.title | titlecase}}
-        <button class="btn btn-primary" (click)="onDeleteBook(i)"><fa-icon [icon]="faMinus"></fa-icon></button>
+      class="list-group-item d-flex justify-content-between align-items-center">
+        <a [routerLink]="['/books', 'view', i]">{{book.title | titlecase}}</a>
+        <button class="btn btn-danger" (click)="onDeleteBook(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
       </li>
     </ul>
     <button class="btn btn-primary mt-2" (click)="onNewBook()">Nouveau Livre</button>

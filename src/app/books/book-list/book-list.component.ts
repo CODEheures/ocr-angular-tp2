@@ -3,7 +3,7 @@ import { Book } from '../../interfaces/book';
 import { Subscription } from 'rxjs';
 import { BookService } from '../../services/book.service';
 import { Router } from '@angular/router';
-import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-book-list',
@@ -15,7 +15,7 @@ export class BookListComponent implements OnInit, OnDestroy {
   public books: Book[]
   public booksSubscription: Subscription
   public msgError: string
-  public faMinus = faMinus
+  public faTrashAlt = faTrashAlt
 
   constructor(private bookService: BookService, private router: Router) { }
 
@@ -40,9 +40,5 @@ export class BookListComponent implements OnInit, OnDestroy {
     } catch (error) {
       this.msgError = error
     }
-  }
-
-  onViewBook(id: number) {
-    this.router.navigate(['/books', id])
   }
 }
